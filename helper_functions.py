@@ -72,6 +72,9 @@ def get_and_cache_songs(search_term):
         return CACHE_DICTION[unique_ident]
     else:
         resp = requests.get(baseurl, params=params)
+        print('----')
+        print(type(resp))
+        print('----')
         resp_text = resp.text 
         python_resp = json.loads(resp_text)
         CACHE_DICTION[unique_ident] = python_resp

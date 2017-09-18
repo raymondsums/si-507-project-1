@@ -15,53 +15,46 @@ class Function_Test(unittest.TestCase):
         pass
 
     def test_constructor_1(self):
-        self.assertEqual(Card().suit_names,['Diamonds','Clubs','Hearts','Spades'],'testing that suit_names contains a list of strings that represent suits')
-        #no one should ever put in a number that is an invalid suit (less than zero or greater than 3)
+        Card1 = Card(-1)
+        self.assertNotIsInstance(Card1.suit, str, 'testing that if a suit value input outside of the range 0-3 returns a string value')
 
     def test_constructor_2(self):
-        list = []
-        for i in range(1,14):
-            list.append(i)
-        self.assertEqual((Card().rank_levels),list,'testing that rank_levels contain a list of integer from 1 to 13')
-        #no one should put an invalid rank (less than zero or greater than 13)
+        Card2 = Card(0,15)
+        self.assertNotIsInstance(Card2.rank,int,'testing that if a rank value outside of the range 1-13 and if it returns an int value')
 
     def test_constructor_3(self):
         dict={1:'Ace',11:'Jack',12:'Queen',13:'King'}
         self.assertEqual((Card().faces),dict,'testing that the values in the card matches the dictionary keys assigned')
 
     def test_constructor_4(self):
-        run1 = Card(suit,rank)
-        self.assertEqual(type(suit),int,'testing that the values for the input suits are integers')
-        self.assertEqual(type(rank),int,'testing that the values for the input ranks are integers')
+        alist = [1,2,3,4,5,6,7,8,9,10,11,12,13]
+        self.assertEqual((Card().rank_levels),alist,'testing that the rank levels are similar to what is described in the code description')
+
+    def test_play_war_game(self):
+        self.assertEqual(type(play_war_game('TRUE')),type(('String',1,3)),'testing that the output of play_war_game returns a tuple')
+        
+    def test_play_war_game_2(self):
+        new_list = []
+        for i in play_war_game('TRUE'):
+            new_list.append(i)
+        test_list = ['String',1,3]
+        for i in range(len(new_list)):
+            self.assertEqual(type(new_list[i]),type(test_list[i]),'testing that every element in the output of play_war_game matches the expected type')
+
+    def test_deck(self):
+        self.assertEqual((len(str(Deck()).split('\n'))),52,'testing that the deck has generated 52 cards in total')
 
     def test_pop_card(self):
-    	self.assertEqual((Deck().pop_card,Deck(3,13),'testing the last card in the deck is 13 of Spades')
+        self.assertEqual(str(Deck().pop_card()),str(Card(3,13)),'testing that the popped card is the last card(card with highest value as assigned by the suit and rank) in an unshuffled deck')
 
-unittest.main(verbosity=2)
+    def test_deal_hand(self):
+        self.assertEqual(str((Deck().deal_hand(1))[0]),str(Card(0,1)),'testing that deal_hand pops the first card in a unshuffled deck')
 
-#
-#    def test_constructor_4(self):
-#        self.assertEqual(Card())
-#
-#    def test_constructor_1(self):
-#        for i in range(0,3):
-#            self.assertRaises(Card(i,rank))
-#        self.assertEqual(Card(suit,rank),4,"testing that the constructor accepts only two numbers")
+    def test_show_song(self):
+        self.assertRaises(TypeError,show_song(0),'testing that the input for show_song can only be a string')
+    
+    def tearDown(self):
+        pass
 
-#    def test_constructor_4(self):
-        #testing that the input is int and not a string or a float
-
-#    def test_deck(self):
-#        self.assertEqual(list(Deck(),52,'testing that there are 52 multi-lines printed for Deck'))
-
-#    def test_show_song(self):
-#        self.assertEqual(show_song(),'')
-        #testing that the show_song takes a string as an input
-
-#    def test_show_song_2(self):
-        #testing that the show_song function returns the type list
-
-#    def test_play_war_game(self):
-#        test_result = play_war_game(True)
-#        print test_result
-        #change default value to testing=TRUE to test this
+if __name__=="__main__":
+    unittest.main(verbosity=2)

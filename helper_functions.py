@@ -38,10 +38,12 @@ class Song(object):
 
 
 def random_song(list_of_song_objs):
-    '''Function to get a random song from a list of song objects and return an identifiable tuple about the song'''
+    '''Function to get a random song from a list of song objects and return an'
+    'identifiable tuple about the song'''
     song_picked = random.choice(list_of_song_objs)
-    print(song_picked.track, song_picked.artist)# just return track name and artist tuple for identification
-    return song_picked # return song object
+    print(song_picked.track, song_picked.artist)  # just return track name and artist tuple for identification
+    return song_picked  # return song object
+
 
 def set_up_cache(cache_file_name="CACHE_FILE.txt"):
     try:
@@ -51,6 +53,7 @@ def set_up_cache(cache_file_name="CACHE_FILE.txt"):
     except:
         CACHE_DICTION = {}
     return CACHE_DICTION
+
 
 def params_unique_combination(baseurl, params_d, private_keys=["api_key"]):
     alphabetized_keys = sorted(params_d.keys())
@@ -75,17 +78,13 @@ def get_and_cache_songs(search_term):
         print('----')
         print(type(resp))
         print('----')
-        resp_text = resp.text 
+        resp_text = resp.text
         python_resp = json.loads(resp_text)
         CACHE_DICTION[unique_ident] = python_resp
         return CACHE_DICTION[unique_ident]
 
-
-
 if __name__ == '__main__':
-
     songs_resp = get_and_cache_songs("Want")
     song_objs = [Song(s) for s in songs_resp["results"]]
     single_song = random_song(song_objs)
-    
 
